@@ -54,8 +54,14 @@ struct NativeScriptDesc {
 		godot_instance_method method;
 		MethodInfo info;
 		int rpc_mode;
-		String documentation;
+        String documentation;
 	};
+    struct StaticMethod {
+        godot_static_method method;
+        MethodInfo info;
+        String documentation;
+    };
+
 	struct Property {
 		godot_property_set_func setter;
 		godot_property_get_func getter;
@@ -71,6 +77,7 @@ struct NativeScriptDesc {
 	};
 
 	Map<StringName, Method> methods;
+    Map<StringName, StaticMethod> static_methods;
 	OrderedHashMap<StringName, Property> properties;
 	Map<StringName, Signal> signals_; // QtCreator doesn't like the name signals
 	StringName base;

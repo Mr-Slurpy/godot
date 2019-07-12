@@ -243,6 +243,15 @@ void GDAPI *godot_nativescript_get_instance_binding_data(int p_idx, godot_object
 
 void GDAPI godot_nativescript_profiling_add_data(const char *p_signature, uint64_t p_time);
 
+typedef struct {
+	// method data, num args, args - return result as varaint
+	GDCALLINGCONV godot_variant (*method)(void *, int, godot_variant **);
+	void *method_data;
+	GDCALLINGCONV void (*free_func)(void *);
+} godot_static_method;
+
+void GDAPI godot_nativescript_register_static_method(void *p_gdnative_handle, const char *p_name, const char *p_function_name, godot_static_method p_method);
+
 #ifdef __cplusplus
 }
 #endif

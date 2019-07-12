@@ -369,6 +369,26 @@ void GDAPI godot_nativescript_profiling_add_data(const char *p_signature, uint64
 	NativeScriptLanguage::get_singleton()->profiling_add_data(StringName(p_signature), p_time);
 }
 
+void GDAPI godot_nativescript_register_static_method(void *p_gdnative_handle, const char *p_name, const char *p_function_name, godot_static_method p_method) {
+
+	String *s = (String *)p_gdnative_handle;
+
+	Map<StringName, NativeScriptDesc>::Element *E = NSL->library_classes[*s].find(p_name);
+
+	if (!E) {
+		ERR_EXPLAIN("Attempted to register static method on non-existent class!");
+		ERR_FAIL();
+	}
+
+    NativeScriptDesc::StaticMethod method;
+    method.method = p_method;
+    method.info = MethodInfo(p_function_name);
+
+    E->get().static_methods.insert(p_function_name, method);
+
+    print_line("test");
+}
+
 #ifdef __cplusplus
 }
 #endif
